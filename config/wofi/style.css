@@ -1,0 +1,65 @@
+/* Подтягиваем цвета из твоего pywal */
+@import url("../../.cache/wal/colors.css");
+
+/* Основное окно */
+window {
+    margin: 0px;
+    border: 2px solid @color5; /* Рамка в цвет акцента pywal */
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный темный фон */
+    border-radius: 15px; /* Скругления как в hyprland/quickshell */
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 14px;
+}
+/* Строка ввода */
+#input {
+    margin: 15px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3); /* Чуть темнее для контраста */
+    color: @foreground;
+}
+
+#inner-box {
+    margin: 5px;
+    border: none;
+    background-color: transparent;
+}
+
+#outer-box {
+    margin: 5px;
+    border: none;
+    background-color: transparent;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+/* Текст элементов списка */
+#text {
+    margin: 5px;
+    border: none;
+    color: @foreground;
+}
+
+/* Сами элементы списка */
+#entry {
+    border: 2px solid transparent; /* Прозрачная рамка, чтобы текст не прыгал */
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin: 0px 10px 5px 10px;
+}
+
+/* Выбранный (активный) элемент */
+#entry:selected {
+    background-color: @color5; /* Фон в цвет акцента */
+    color: @background;
+    border: 2px solid @color1; /* Яркая обводка другим цветом из твоей палитры */
+    outline: none;
+}
+#entry:selected #text {
+    color: @background; /* Чтобы текст не сливался с фоном */
+    font-weight: bold;
+}

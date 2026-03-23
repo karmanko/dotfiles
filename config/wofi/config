@@ -1,0 +1,17 @@
+# Основные настройки окна
+width=500
+height=400
+location=top_right
+xoffset=-15
+yoffset=15
+show=drun
+prompt=Search...
+filter_rate=100
+allow_markup=true
+no_actions=true
+halign=fill
+orientation=vertical
+content_halign=fill
+hide_scroll=true
+insensitive=true
+
