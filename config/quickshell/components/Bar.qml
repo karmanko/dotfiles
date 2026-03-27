@@ -31,7 +31,7 @@ PanelWindow {
     property string volumeStr: "󰕾 0%"
     property int volumePercent: 50
     property bool volumeMuted: false
-    property bool wifiConnected: false
+    property bool wifiConnected: true
     property string wifiSSID: ""
     property int wifiStrength: 0
     property bool btConnected: false
@@ -933,6 +933,33 @@ PanelWindow {
                         else
                             root.toggleWifi()
                     }
+                }
+            }
+
+            Notch {
+                width: 36
+                hovered: ethMA.containsMouse
+                tooltip: "Ethernet"
+                visible: bar.ethConnected // Модуль пропадет, если мы передадим false
+
+                Item {
+                    anchors.fill: parent
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "󰈀" // Это иконка Ethernet из Nerd Fonts
+                        color: root.walColor1
+                        font.pixelSize: 15
+                        font.family: "JetBrainsMono Nerd Font"
+                    }
+                }
+
+                MouseArea {
+                    id: ethMA
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+                    // onClicked: root.toggleNetworkManager() // Можно раскомментировать, если есть функция
                 }
             }
 
