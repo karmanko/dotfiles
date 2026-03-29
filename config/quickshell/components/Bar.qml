@@ -5,6 +5,7 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
+import Quickshell.Services.SystemTray
 
 PanelWindow {
     id: bar
@@ -960,6 +961,51 @@ PanelWindow {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     // onClicked: root.toggleNetworkManager() // Можно раскомментировать, если есть функция
+                }
+            }
+
+            Notch {
+                // Ширина подстраивается сама + небольшие отступы по краям
+                width: trayRow.width + 24 
+                // Если нет фоновых приложений — модуль просто исчезает, чтобы не висеть пустым
+                visible: SystemTray.items.count > 0 
+
+                Row {
+                    id: trayRow
+                    anchors.centerIn: parent
+                    spacing: 8
+
+                    // Repeater — это цикл. Он берет список программ из SystemTray 
+                    // и для каждой рисует эту квадратную иконку
+                    Repeater {
+                        model: SystemTray.items
+
+                        delegate: Item {
+                            width: 20
+                            height: 20
+                            property var item: modelData
+
+                            Image {
+                                anchors.fill: parent
+                                source: item.icon !== "" ? item.icon : "image-missing" // Quickshell сам подтянет нужную картинку
+                                fillMode: Image.PreserveAspectFit
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                
+                                onClicked: function(mouse) {
+                                    if (mouse.button === Qt.LeftButton)
+                                        item.activate() // Левый клик — развернуть окно
+                                    else
+                                        item.secondaryActivate() // Правый клик — альтернативное действие
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
