@@ -15,7 +15,7 @@ PanelWindow {
     implicitWidth: 420
     color: "transparent"
     focusable: true
-    WlrLayershell.keyboardFocus: root.launcherVisible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+    WlrLayershell.keyboardFocus: root.launcherVisible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
     Behavior on margins.left { NumberAnimation { duration: 300; easing.type: Easing.OutCubic } }
 
     Rectangle {
@@ -722,7 +722,7 @@ PanelWindow {
         }
     }
 
-    Connections {
+Connections {
         target: root
         function onLauncherVisibleChanged() {
             if (root.launcherVisible) {
@@ -753,23 +753,12 @@ PanelWindow {
         interval: 50
         repeat: false
         onTriggered: {
-            launcherPanel.WlrLayershell.keyboardFocus = WlrKeyboardFocus.Exclusive
-            exclusiveReleaseTimer.start()
-        }
-    }
-
-    Timer {
-        id: exclusiveReleaseTimer
-        interval: 100
-        repeat: false
-        onTriggered: {
-            if (root.activeTab === 0)
+            if (root.activeTab === 0) {
                 searchInput.forceActiveFocus()
-            else {
+            } else {
                 if (!root.wallsLoaded) root.loadWallpapers()
                 wallSearchInput.forceActiveFocus()
             }
-            launcherPanel.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
         }
     }
 }
